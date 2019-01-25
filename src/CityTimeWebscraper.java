@@ -4,7 +4,7 @@ import org.jsoup.nodes.Element;
 
 public class CityTimeWebscraper {
 
-    private String getCityTime(String city){
+    public String getCityTime(String city){
         final String url = getCityQuery(city);
 
         if(url.isEmpty()) throw new IllegalStateException("Cannot query empty URL");
@@ -25,7 +25,7 @@ public class CityTimeWebscraper {
         return "!!!The city is unknown to me!!!";
     }
 
-    public String getCityQuery(String city){
+    private String getCityQuery(String city){
         city = city.replaceAll(" ", "+");
         String cityQuery = "https://www.timeanddate.com/worldclock/?query=" + city;
 
