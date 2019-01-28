@@ -1,13 +1,12 @@
+package JSoupVersion;
+
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import java.io.IOException;
 
-public class CityTimeAndDateWebScraper {
-
-    public static void main(String[] args) {
-        CityTimeAndDateWebScraper cw = new CityTimeAndDateWebScraper();
-        System.out.println(cw.getCityTimeAndDate("New York"));
-    }
+public class CityTimeAndDateWebscraper {
 
     public String getCityTimeAndDate(String city){
         final String url = getCityQuery(city);
@@ -15,17 +14,21 @@ public class CityTimeAndDateWebScraper {
         if(url.isEmpty()) throw new IllegalStateException("Cannot query empty URL");
 
         try {
-            final Document document = Jsoup.connect(url).get();
+            final Document document = Jsoup.connect(url).header("Accept-Language", "en").get();
             Element time = document.getElementById("twd");
             Element date = document.getElementById("dd");
+            Element place = document.select("h1").first();
 
-            String timeanddate = time.text() + " " + date.text();
+            String timeanddate = place.text()+ " " + date.text() + " " + time.text();
 
             return timeanddate;
 
         }
-        catch(Exception ex){
-            ex.printStackTrace();
+        catch(HttpStatusException hs){
+            System.err.println("URL Not found, cannot query.");
+        }
+        catch(IOException ie){
+            ie.printStackTrace();
         }
 
         return "!!!The city is unknown to me!!!";
