@@ -8,11 +8,6 @@ import java.util.regex.Pattern;
 
 public class WTSCityTimeAndDate {
 
-    public static void main(String[] args) {
-        WTSCityTimeAndDate wts = new WTSCityTimeAndDate();
-        System.out.println(wts.fetchCityTimeAndDate("lørenskog"));
-    }
-
     private String fetchCityTimeAndDateHTML(String city){
         String content = null;
         URLConnection connection = null;
